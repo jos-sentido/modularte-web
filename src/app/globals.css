@@ -59,6 +59,14 @@ h1, h2, h3 {
 .foto-fade { opacity: 0; transition: opacity 0.7s ease; }
 .foto-fade.foto-loaded { opacity: 1; }
 
+/* ---- Marquee: palabra de marca pasando en loop por el fondo ---- */
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-x { animation: marquee-x 40s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .marquee-x { animation: none; } }
+
 /* ---- Ken Burns sutil para hero cinematográfico ---- */
 @keyframes kb {
   from { transform: scale(1.03); }

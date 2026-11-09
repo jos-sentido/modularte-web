@@ -105,14 +105,26 @@ export default function Home() {
 
       {/* BANDA ROJA DE IMPACTO — campo de color + tipografía gigante de textura */}
       <section className="relative overflow-hidden bg-rojo text-white">
-        <span
+        {/* palabra de marca pasando en loop (carrusel) por el fondo */}
+        <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
+          className="pointer-events-none absolute inset-0 flex select-none items-center overflow-hidden"
         >
-          <span className="select-none font-display text-[30vw] font-bold uppercase leading-none text-white/10">
-            Modular
-          </span>
-        </span>
+          <div className="marquee-x flex w-max">
+            {[0, 1].map((half) => (
+              <span
+                key={half}
+                className="flex shrink-0 items-center whitespace-nowrap font-display text-[34vw] font-bold uppercase leading-none text-white/10"
+              >
+                {["Modular", "Modular", "Modular"].map((w, i) => (
+                  <span key={i} className="px-[0.1em]">
+                    {w}
+                  </span>
+                ))}
+              </span>
+            ))}
+          </div>
+        </div>
         <div className="relative mx-auto max-w-6xl px-4 py-24">
           <div className="grid gap-8 lg:grid-cols-[1.25fr_1fr] lg:items-end">
             <h2 className="font-display text-4xl font-bold uppercase leading-[0.95] sm:text-6xl">
