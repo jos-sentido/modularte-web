@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import CotizarButton from "./CotizarButton";
 
 const links = [
@@ -16,9 +17,25 @@ const links = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-linea bg-hueso/90 backdrop-blur">
+    <header
+      className={`sticky top-0 z-50 border-b bg-hueso/90 backdrop-blur transition-shadow ${
+        scrolled ? "border-linea shadow-sm" : "border-transparent"
+      }`}
+    >
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/" className="flex items-center gap-2.5" aria-label="Modularte — inicio">
           <Image
@@ -39,7 +56,10 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm text-pizarra transition-colors hover:text-rojo"
+              aria-current={isActive(l.href) ? "page" : undefined}
+              className={`text-sm transition-colors hover:text-rojo ${
+                isActive(l.href) ? "font-semibold text-rojo" : "text-pizarra"
+              }`}
             >
               {l.label}
             </Link>
@@ -65,7 +85,10 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="rounded-lg px-2 py-2.5 text-pizarra hover:bg-white"
+                aria-current={isActive(l.href) ? "page" : undefined}
+                className={`rounded-lg px-2 py-2.5 hover:bg-white ${
+                  isActive(l.href) ? "font-semibold text-rojo" : "text-pizarra"
+                }`}
                 onClick={() => setOpen(false)}
               >
                 {l.label}

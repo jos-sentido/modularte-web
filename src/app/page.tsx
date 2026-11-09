@@ -1,8 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import Eyebrow from "@/components/Eyebrow";
 import CotizarButton from "@/components/CotizarButton";
 import CotizaForm from "@/components/CotizaForm";
+import Reveal from "@/components/Reveal";
+import Foto from "@/components/Foto";
 import { sistemas } from "@/data/sistemas";
 import { sectores } from "@/data/sectores";
 import { proyectos } from "@/data/proyectos";
@@ -11,9 +12,14 @@ export default function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="border-b border-linea">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:py-20 lg:grid-cols-2">
-          <div>
+      <section className="relative overflow-hidden border-b border-linea">
+        <div aria-hidden className="blueprint pointer-events-none absolute inset-0" />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-32 top-0 hidden h-full w-56 -skew-x-12 bg-rojo/5 lg:block"
+        />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:py-20 lg:grid-cols-2">
+          <Reveal>
             <Eyebrow>Construcciones prefabricadas</Eyebrow>
             <h1 className="mt-5 font-display text-4xl font-bold uppercase leading-[1.05] tracking-tight text-tinta sm:text-6xl">
               Espacios de acero listos para operar
@@ -40,10 +46,10 @@ export default function Home() {
                 </div>
               ))}
             </dl>
-          </div>
+          </Reveal>
 
-          <div className="relative">
-            <Image
+          <Reveal delay={120} className="relative">
+            <Foto
               src="/fotos/modulos-exterior.jpg"
               alt="Campamento modular de dos niveles construido por Modularte"
               width={1000}
@@ -53,22 +59,24 @@ export default function Home() {
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <span className="pointer-events-none absolute -bottom-3 -left-3 h-16 w-16 rounded-bl-2xl border-b-4 border-l-4 border-rojo" />
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* SISTEMAS */}
       <section className="mx-auto max-w-6xl px-4 py-20">
-        <Eyebrow>Los sistemas</Eyebrow>
-        <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
-          Un sistema para cada necesidad
-        </h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal>
+          <Eyebrow>Los sistemas</Eyebrow>
+          <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
+            Un sistema para cada necesidad
+          </h2>
+        </Reveal>
+        <Reveal className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sistemas.map((s) => (
             <Link
               key={s.slug}
               href={`/sistemas/${s.slug}`}
-              className="group rounded-xl border border-linea bg-white p-6 transition-colors hover:border-rojo"
+              className="group rounded-xl border border-linea bg-white p-6 transition-all hover:-translate-y-0.5 hover:border-rojo hover:shadow-md"
             >
               <div className="flex items-center justify-between">
                 <h3 className="font-display text-xl font-bold uppercase text-pizarra">
@@ -86,22 +94,24 @@ export default function Home() {
               </span>
             </Link>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* SOLUCIONES POR SECTOR */}
       <section id="soluciones" className="border-y border-linea bg-white">
         <div className="mx-auto max-w-6xl px-4 py-20">
-          <Eyebrow>Soluciones por sector</Eyebrow>
-          <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
-            Resolvemos por industria
-          </h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Reveal>
+            <Eyebrow>Soluciones por sector</Eyebrow>
+            <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
+              Resolvemos por industria
+            </h2>
+          </Reveal>
+          <Reveal className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {sectores.map((s) => (
               <Link
                 key={s.slug}
                 href={`/soluciones/${s.slug}`}
-                className="group rounded-xl border border-linea bg-hueso p-6 transition-colors hover:border-rojo"
+                className="group rounded-xl border border-linea bg-hueso p-6 transition-all hover:-translate-y-0.5 hover:border-rojo hover:shadow-md"
               >
                 <h3 className="font-display text-lg font-bold uppercase text-pizarra">
                   {s.nombre}
@@ -112,13 +122,13 @@ export default function Home() {
                 </span>
               </Link>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* PROYECTOS */}
       <section className="mx-auto max-w-6xl px-4 py-20">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+        <Reveal className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <Eyebrow>Proyectos</Eyebrow>
             <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
@@ -128,14 +138,14 @@ export default function Home() {
           <Link href="/proyectos" className="text-sm font-semibold text-rojo">
             Ver todos →
           </Link>
-        </div>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        </Reveal>
+        <Reveal className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {proyectos.slice(0, 6).map((p) => (
             <figure
               key={p.img}
               className="group relative overflow-hidden rounded-xl border border-linea"
             >
-              <Image
+              <Foto
                 src={p.img}
                 alt={p.titulo}
                 width={1000}
@@ -151,17 +161,19 @@ export default function Home() {
               </figcaption>
             </figure>
           ))}
-        </div>
+        </Reveal>
       </section>
 
       {/* POR QUÉ MODULARTE */}
       <section className="border-t border-linea bg-white">
         <div className="mx-auto max-w-6xl px-4 py-20">
-          <Eyebrow>Por qué Modularte</Eyebrow>
-          <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
-            Respaldo que sostiene la promesa
-          </h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal>
+            <Eyebrow>Por qué Modularte</Eyebrow>
+            <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
+              Respaldo que sostiene la promesa
+            </h2>
+          </Reveal>
+          <Reveal className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
               { t: "+30 años", d: "Construyendo soluciones a la medida de cada proyecto." },
               { t: "Respaldo de fábrica", d: "Manufactura con capacidad industrial y control de calidad." },
@@ -173,14 +185,14 @@ export default function Home() {
                 <p className="mt-2 text-sm text-pizarra">{x.d}</p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
       {/* CIERRE + COTIZACIÓN */}
       <section className="border-t border-linea">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-2">
-          <div>
+          <Reveal>
             <Eyebrow>Cotiza tu proyecto</Eyebrow>
             <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
               Cuéntanos qué necesitas
@@ -189,8 +201,10 @@ export default function Home() {
               Dinos el sistema, el sector y el alcance. Te armamos una propuesta a la
               medida.
             </p>
-          </div>
-          <CotizaForm />
+          </Reveal>
+          <Reveal delay={100}>
+            <CotizaForm />
+          </Reveal>
         </div>
       </section>
     </>
