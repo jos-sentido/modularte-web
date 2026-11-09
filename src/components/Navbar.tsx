@@ -7,6 +7,7 @@ import CotizarButton from "./CotizarButton";
 
 const links = [
   { href: "/sistemas", label: "Sistemas" },
+  { href: "/configurador", label: "Configurador" },
   { href: "/soluciones", label: "Soluciones" },
   { href: "/proyectos", label: "Proyectos" },
   { href: "/nosotros", label: "Nosotros" },

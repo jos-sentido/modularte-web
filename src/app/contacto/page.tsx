@@ -18,6 +18,10 @@ export default async function ContactoPage({
 }) {
   const { sistema = "", sector = "" } = await searchParams;
 
+  const mapQuery = encodeURIComponent(
+    "Mexicaltzingo 1545, Col. Moderna, Guadalajara, Jalisco 44100",
+  );
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">
       <div className="grid gap-12 lg:grid-cols-2">
@@ -31,10 +35,10 @@ export default async function ContactoPage({
             cotización.
           </p>
 
-          <ul className="mt-8 space-y-3 text-sm text-tinta">
+          <ul className="mt-8 space-y-4 text-sm text-tinta">
             <li>
               <span className="font-eyebrow text-xs uppercase tracking-[0.14em] text-pizarra">
-                Teléfono
+                Teléfono / WhatsApp
               </span>
               <br />
               <a href="tel:+523326160168" className="hover:text-rojo">
@@ -58,6 +62,18 @@ export default async function ContactoPage({
               Mexicaltzingo #1545 int 167, Col. Moderna, Guadalajara, Jal. C.P. 44100
             </li>
           </ul>
+
+          <div className="mt-8 overflow-hidden rounded-xl border border-linea">
+            <iframe
+              title="Ubicación de Modularte en Guadalajara"
+              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+              width="100%"
+              height="260"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="block border-0"
+            />
+          </div>
         </div>
 
         <div className="rounded-2xl border border-linea bg-white p-6 sm:p-8">
