@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
+/* ============================================================
+   MODULARTE — identidad aprobada (v1.0)
+   Rojo #BE3E3E · Gris pizarra #515A65 · Negro #222221 · Gris claro #F3F3F3
+   Fuentes: Downey (titulares) · Pastiche Grotesque (texto) · Asket Extended (antetítulos)
+   ============================================================ */
+
+@theme {
+  --color-rojo: #be3e3e;
+  --color-rojo-600: #a9332f;
+  --color-pizarra: #515a65;
+  --color-tinta: #222221;
+  --color-hueso: #f3f3f3;
+  --color-linea: #e3e3e1;
+
+  --font-display: var(--font-downey), "Jost", system-ui, sans-serif;
+  --font-sans: var(--font-pastiche), system-ui, sans-serif;
+  --font-eyebrow: var(--font-asket), system-ui, sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f3f3f3;
+  --foreground: #222221;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-pastiche), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Titulares siempre con Downey (display, caja alta se ve mejor) */
+h1, h2, h3 {
+  font-family: var(--font-pastiche), system-ui, sans-serif;
 }

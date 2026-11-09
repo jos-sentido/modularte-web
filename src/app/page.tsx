@@ -1,69 +1,129 @@
-import Image from "next/image";
+import Link from "next/link";
+import Eyebrow from "@/components/Eyebrow";
+import CotizarButton from "@/components/CotizarButton";
+import CotizaForm from "@/components/CotizaForm";
+import { sistemas } from "@/data/sistemas";
+import { sectores } from "@/data/sectores";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <>
+      {/* HERO */}
+      <section className="border-b border-linea">
+        <div className="mx-auto max-w-6xl px-4 py-20 sm:py-28">
+          <Eyebrow>Construcciones prefabricadas</Eyebrow>
+          <h1 className="mt-5 max-w-3xl font-display text-4xl font-bold uppercase leading-[1.05] tracking-tight text-tinta sm:text-6xl">
+            Espacios de acero listos para operar
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-5 max-w-xl text-lg text-pizarra">
+            Diseño, fabricación y montaje de módulos para industria, oficina, educación
+            y más. Entrega en semanas, no en meses.
           </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <CotizarButton>Cotizar mi proyecto</CotizarButton>
+            <CotizarButton href="/sistemas" variant="outline">
+              Ver los sistemas
+            </CotizarButton>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* SISTEMAS */}
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <Eyebrow>Los sistemas</Eyebrow>
+        <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
+          Un sistema para cada necesidad
+        </h2>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {sistemas.map((s) => (
+            <Link
+              key={s.slug}
+              href={`/sistemas/${s.slug}`}
+              className="group rounded-xl border border-linea bg-white p-6 transition-colors hover:border-rojo"
+            >
+              <div className="flex items-center justify-between">
+                <h3 className="font-display text-xl font-bold uppercase text-pizarra">
+                  {s.nombre}
+                </h3>
+                {s.pendiente && (
+                  <span className="rounded border border-linea px-2 py-0.5 text-[10px] uppercase tracking-wide text-pizarra">
+                    Próximamente
+                  </span>
+                )}
+              </div>
+              <p className="mt-2 text-sm text-pizarra">{s.tagline}</p>
+              <span className="mt-4 inline-block text-sm font-semibold text-rojo">
+                Ver sistema →
+              </span>
+            </Link>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* SOLUCIONES POR SECTOR */}
+      <section id="soluciones" className="border-y border-linea bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-20">
+          <Eyebrow>Soluciones por sector</Eyebrow>
+          <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
+            Resolvemos por industria
+          </h2>
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {sectores.map((s) => (
+              <Link
+                key={s.slug}
+                href={`/soluciones/${s.slug}`}
+                className="group rounded-xl border border-linea bg-hueso p-6 transition-colors hover:border-rojo"
+              >
+                <h3 className="font-display text-lg font-bold uppercase text-pizarra">
+                  {s.nombre}
+                </h3>
+                <p className="mt-2 text-sm text-pizarra">{s.problema}</p>
+                <span className="mt-4 inline-block text-sm font-semibold text-rojo">
+                  Ver solución →
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* POR QUÉ MODULARTE */}
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <Eyebrow>Por qué Modularte</Eyebrow>
+        <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
+          Respaldo que sostiene la promesa
+        </h2>
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { t: "+30 años", d: "Construyendo soluciones a la medida de cada proyecto." },
+            { t: "Respaldo de fábrica", d: "Manufactura con capacidad industrial y control de calidad." },
+            { t: "Certificaciones", d: "Cumplimiento y estándares donde el proyecto lo exige." },
+            { t: "Cobertura nacional", d: "Entregamos y montamos donde esté la operación." },
+          ].map((x) => (
+            <div key={x.t} className="border-t-2 border-rojo pt-4">
+              <p className="font-display text-xl font-bold uppercase text-tinta">{x.t}</p>
+              <p className="mt-2 text-sm text-pizarra">{x.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CIERRE + COTIZACIÓN */}
+      <section className="border-t border-linea bg-white">
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 lg:grid-cols-2">
+          <div>
+            <Eyebrow>Cotiza tu proyecto</Eyebrow>
+            <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta">
+              Cuéntanos qué necesitas
+            </h2>
+            <p className="mt-4 max-w-md text-pizarra">
+              Dinos el sistema, el sector y el alcance. Te armamos una propuesta a la
+              medida.
+            </p>
+          </div>
+          <CotizaForm />
+        </div>
+      </section>
+    </>
   );
 }
