@@ -18,9 +18,10 @@ export default async function ContactoPage({
 }) {
   const { sistema = "", sector = "" } = await searchParams;
 
-  const mapQuery = encodeURIComponent(
-    "Mexicaltzingo 1545, Col. Moderna, Guadalajara, Jalisco 44100",
-  );
+  const direccion = "Mexicaltzingo 1545, Col. Moderna, Guadalajara, Jalisco 44100";
+  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    direccion,
+  )}`;
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">
@@ -63,17 +64,26 @@ export default async function ContactoPage({
             </li>
           </ul>
 
-          <div className="mt-8 overflow-hidden rounded-xl border border-linea">
-            <iframe
-              title="Ubicación de Modularte en Guadalajara"
-              src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
-              width="100%"
-              height="260"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="block border-0"
-            />
-          </div>
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 flex items-center justify-between gap-4 rounded-xl border border-linea bg-white p-5 transition-colors hover:border-rojo"
+          >
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-rojo/10 text-rojo">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M12 21s-7-5.2-7-11a7 7 0 1114 0c0 5.8-7 11-7 11z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-tinta">Nuestra ubicación</p>
+                <p className="text-xs text-pizarra">Guadalajara, Jalisco</p>
+              </div>
+            </div>
+            <span className="text-sm font-semibold text-rojo">Ver en Google Maps →</span>
+          </a>
         </div>
 
         <div className="rounded-2xl border border-linea bg-white p-6 sm:p-8">
