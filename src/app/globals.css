@@ -59,6 +59,14 @@ h1, h2, h3 {
 .foto-fade { opacity: 0; transition: opacity 0.7s ease; }
 .foto-fade.foto-loaded { opacity: 1; }
 
+/* ---- Ken Burns sutil para hero cinematográfico ---- */
+@keyframes kb {
+  from { transform: scale(1.03); }
+  to { transform: scale(1.12); }
+}
+.kenburns { animation: kb 22s ease-in-out infinite alternate; }
+@media (prefers-reduced-motion: reduce) { .kenburns { animation: none; } }
+
 /* ---- Textura de plano técnico (blueprint) sutil ---- */
 .blueprint {
   background-image:

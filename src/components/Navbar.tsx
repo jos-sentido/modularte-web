@@ -30,10 +30,15 @@ export default function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  // Transparente sobre el hero oscuro del home; sólido al bajar o en otras páginas.
+  const overHero = pathname === "/" && !scrolled && !open;
+
   return (
     <header
-      className={`sticky top-0 z-50 border-b bg-hueso/90 backdrop-blur transition-shadow ${
-        scrolled ? "border-linea shadow-sm" : "border-transparent"
+      className={`sticky top-0 z-50 border-b backdrop-blur transition-colors duration-300 ${
+        overHero
+          ? "border-transparent bg-transparent backdrop-blur-0"
+          : `bg-hueso/90 ${scrolled ? "border-linea shadow-sm" : "border-transparent"}`
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
@@ -46,7 +51,11 @@ export default function Navbar() {
             className="h-9 w-9"
             priority
           />
-          <span className="font-display text-xl font-bold uppercase leading-none tracking-wide text-pizarra">
+          <span
+            className={`font-display text-xl font-bold uppercase leading-none tracking-wide ${
+              overHero ? "text-white" : "text-pizarra"
+            }`}
+          >
             Modularte
           </span>
         </Link>
@@ -58,7 +67,11 @@ export default function Navbar() {
               href={l.href}
               aria-current={isActive(l.href) ? "page" : undefined}
               className={`text-sm transition-colors hover:text-rojo ${
-                isActive(l.href) ? "font-semibold text-rojo" : "text-pizarra"
+                overHero
+                  ? "text-white/90"
+                  : isActive(l.href)
+                    ? "font-semibold text-rojo"
+                    : "text-pizarra"
               }`}
             >
               {l.label}
@@ -69,7 +82,9 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-linea text-pizarra md:hidden"
+          className={`inline-flex h-10 w-10 items-center justify-center rounded-lg border md:hidden ${
+            overHero ? "border-white/40 text-white" : "border-linea text-pizarra"
+          }`}
           aria-label="Menú"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
