@@ -67,14 +67,21 @@ h1, h2, h3 {
 .kenburns { animation: kb 22s ease-in-out infinite alternate; }
 @media (prefers-reduced-motion: reduce) { .kenburns { animation: none; } }
 
-/* ---- Textura de plano técnico (blueprint) sutil ---- */
+/* ---- Textura de plano técnico (blueprint): se "construye" desde una esquina ---- */
+@keyframes bp-build {
+  from { clip-path: inset(0 100% 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
 .blueprint {
   background-image:
     linear-gradient(var(--color-linea) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-linea) 1px, transparent 1px);
-  background-size: 30px 30px;
+  background-size: 34px 34px;
   background-position: center;
-  -webkit-mask-image: radial-gradient(130% 90% at 70% 0%, #000 0%, transparent 70%);
-  mask-image: radial-gradient(130% 90% at 70% 0%, #000 0%, transparent 70%);
-  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(130% 90% at 70% 0%, #000 0%, transparent 65%);
+  mask-image: radial-gradient(130% 90% at 70% 0%, #000 0%, transparent 65%);
+  animation: bp-build 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .blueprint { animation: none; }
 }

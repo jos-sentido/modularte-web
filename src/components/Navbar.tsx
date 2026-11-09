@@ -30,8 +30,8 @@ export default function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  // Transparente sobre el hero oscuro del home; sólido al bajar o en otras páginas.
-  const overHero = pathname === "/" && !scrolled && !open;
+  // Transparente sobre el header oscuro (todas las páginas lo tienen); sólido al bajar.
+  const overHero = !scrolled && !open;
 
   return (
     <header

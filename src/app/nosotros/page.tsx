@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import PageHero from "@/components/PageHero";
 import Eyebrow from "@/components/Eyebrow";
+import Foto from "@/components/Foto";
+import CornerFrame from "@/components/CornerFrame";
 import CotizarButton from "@/components/CotizarButton";
+import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Nosotros",
   description:
-    "Modularte: más de 30 años construyendo soluciones modulares, con respaldo fabril y cobertura nacional.",
+    "Modularte: más de 30 años en construcción modular, con respaldo fabril y cobertura nacional.",
 };
 
 const pilares = [
@@ -18,67 +21,64 @@ const pilares = [
 
 export default function NosotrosPage() {
   return (
-    <article>
-      {/* HERO */}
-      <section className="border-b border-linea">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 lg:grid-cols-2">
-          <div>
-            <Eyebrow>Nosotros</Eyebrow>
-            <h1 className="mt-4 font-display text-4xl font-bold uppercase leading-[1.05] text-tinta sm:text-5xl">
-              Treinta años construyendo
-            </h1>
-            <p className="mt-5 max-w-xl text-lg text-pizarra">
-              En Modularte diseñamos, fabricamos y montamos espacios modulares.
-              Entregamos operación lista donde otros apenas empiezan la obra.
-            </p>
-            <div className="mt-8">
-              <CotizarButton>Habla con el equipo</CotizarButton>
-            </div>
-          </div>
-          <div className="relative">
-            <Image
-              src="/fotos/oficinas-obra.jpg"
-              alt="Proyecto modular de Modularte en construcción"
-              width={1000}
-              height={1250}
-              priority
-              className="h-auto w-full rounded-2xl object-cover shadow-lg"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-            <span className="pointer-events-none absolute -bottom-3 -left-3 h-16 w-16 rounded-bl-2xl border-b-4 border-l-4 border-rojo" />
-          </div>
-        </div>
-      </section>
+    <>
+      <PageHero
+        eyebrow="Nosotros"
+        title="Treinta años construyendo"
+        subtitle="En Modularte diseñamos, fabricamos y montamos espacios modulares. Entregamos operación lista donde otros apenas empiezan la obra."
+        img="/fotos/oficinas-obra.jpg"
+        imgAlt="Proyecto modular de Modularte"
+      >
+        <CotizarButton>Habla con el equipo</CotizarButton>
+      </PageHero>
 
-      {/* STATS */}
-      <section className="border-b border-linea bg-white">
-        <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-3">
+      {/* BANDA ROJA — cifras */}
+      <section className="bg-rojo text-white">
+        <dl className="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:grid-cols-3">
           {[
             ["+30", "años de experiencia"],
+            ["5", "sistemas modulares"],
             ["Nacional", "cobertura y montaje"],
-            ["Semanas", "no meses de entrega"],
           ].map(([n, t]) => (
-            <div key={t} className="border-t-2 border-rojo pt-3">
-              <p className="font-display text-3xl font-bold uppercase text-tinta">{n}</p>
-              <p className="mt-1 text-sm text-pizarra">{t}</p>
+            <div key={t}>
+              <dt className="font-display text-4xl font-bold uppercase sm:text-5xl">{n}</dt>
+              <dd className="mt-1 text-sm text-white/80">{t}</dd>
             </div>
           ))}
-        </div>
+        </dl>
       </section>
 
-      {/* PILARES */}
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <Eyebrow>Por qué Modularte</Eyebrow>
-        <h2 className="mt-4 font-display text-2xl font-bold uppercase text-tinta">
-          Respaldo que sostiene la promesa
-        </h2>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          {pilares.map((x) => (
-            <div key={x.t} className="rounded-xl border border-linea bg-white p-6">
-              <h3 className="font-display text-lg font-bold uppercase text-pizarra">{x.t}</h3>
-              <p className="mt-2 text-sm text-pizarra">{x.d}</p>
-            </div>
-          ))}
+      {/* PILARES + foto enmarcada */}
+      <section className="mx-auto max-w-6xl px-4 py-20">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div>
+            <Eyebrow>Por qué Modularte</Eyebrow>
+            <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta sm:text-4xl">
+              Respaldo que sostiene la promesa
+            </h2>
+            <ul className="mt-8 space-y-6">
+              {pilares.map((x) => (
+                <li key={x.t} className="flex gap-4">
+                  <span aria-hidden className="mt-1.5 h-3 w-3 flex-none bg-rojo" />
+                  <div>
+                    <h3 className="font-display text-lg font-bold uppercase text-pizarra">{x.t}</h3>
+                    <p className="mt-1 text-sm text-pizarra">{x.d}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Reveal className="relative">
+            <Foto
+              src="/fotos/patio.jpg"
+              alt="Proyecto modular entregado por Modularte"
+              width={1000}
+              height={1250}
+              className="aspect-[4/5] w-full object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <CornerFrame variant="frame" size={44} inset={-1} />
+          </Reveal>
         </div>
       </section>
 
@@ -86,7 +86,7 @@ export default function NosotrosPage() {
       <section className="border-y border-linea bg-white">
         <div className="mx-auto max-w-6xl px-4 py-16">
           <Eyebrow>Certificaciones y cumplimiento</Eyebrow>
-          <h2 className="mt-4 font-display text-2xl font-bold uppercase text-tinta">
+          <h2 className="mt-4 font-display text-2xl font-bold uppercase text-tinta sm:text-3xl">
             Estándares donde importan
           </h2>
           <p className="mt-3 max-w-2xl text-pizarra">
@@ -96,10 +96,7 @@ export default function NosotrosPage() {
           <div className="mt-6 flex flex-wrap gap-3">
             {["Calidad de manufactura", "Control estructural", "Seguridad y resistencia", "Cumplimiento por sector"].map(
               (c) => (
-                <span
-                  key={c}
-                  className="rounded-lg border border-linea bg-hueso px-4 py-2 text-sm text-tinta"
-                >
+                <span key={c} className="border border-linea bg-hueso px-4 py-2 text-sm text-tinta">
                   {c}
                 </span>
               ),
@@ -110,16 +107,18 @@ export default function NosotrosPage() {
 
       {/* CIERRE */}
       <section className="mx-auto max-w-6xl px-4 py-16">
-        <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl border border-linea bg-white p-8">
+        <div className="flex flex-wrap items-center justify-between gap-6 border border-linea bg-white p-8">
           <div>
-            <h2 className="font-display text-2xl font-bold uppercase text-tinta">
+            <h2 className="font-display text-2xl font-bold uppercase text-tinta sm:text-3xl">
               Construyamos tu proyecto
             </h2>
-            <p className="mt-2 text-pizarra">Cuéntanos qué necesitas y te acompañamos de principio a fin.</p>
+            <p className="mt-2 text-pizarra">
+              Cuéntanos qué necesitas y te acompañamos de principio a fin.
+            </p>
           </div>
           <CotizarButton>Habla con el equipo</CotizarButton>
         </div>
       </section>
-    </article>
+    </>
   );
 }

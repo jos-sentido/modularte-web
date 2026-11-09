@@ -26,7 +26,8 @@ export default function Home() {
         />
         <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-tinta via-tinta/55 to-tinta/10" />
         <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-tinta/90 via-tinta/35 to-transparent" />
-        <div aria-hidden className="blueprint pointer-events-none absolute inset-0 opacity-25 mix-blend-soft-light" />
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-tinta/60 to-transparent" />
+        <div aria-hidden className="blueprint pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-soft-light" />
         <CornerFrame variant="all" size={56} stroke={3} inset={24} />
 
         <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-20 pt-32">
@@ -178,7 +179,7 @@ export default function Home() {
 
       {/* PROYECTOS — banda oscura grafito (como el manual presenta la foto) */}
       <section className="relative overflow-hidden bg-tinta text-white">
-        <div aria-hidden className="blueprint pointer-events-none absolute inset-0 opacity-10" />
+        <div aria-hidden className="blueprint pointer-events-none absolute inset-0 opacity-[0.07]" />
         <div className="relative mx-auto max-w-6xl px-4 py-24">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
