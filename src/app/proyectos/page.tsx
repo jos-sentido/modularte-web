@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Eyebrow from "@/components/Eyebrow";
 import CotizarButton from "@/components/CotizarButton";
+import { proyectos } from "@/data/proyectos";
 
 export const metadata: Metadata = {
   title: "Proyectos",
@@ -15,19 +17,31 @@ export default function ProyectosPage() {
         Obra entregada, no promesas
       </h1>
       <p className="mt-4 max-w-xl text-pizarra">
-        Casos reales por sistema y sector. (Galería pendiente: se integra el banco de
-        fotos del cliente.)
+        Casos reales por sistema y sector. Espacios modulares de acero entregados y
+        montados en sitio.
       </p>
 
-      {/* Placeholder de galería — se llena con el banco de fotos de Drive */}
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <div
-            key={i}
-            className="flex aspect-[4/3] items-center justify-center rounded-xl border border-dashed border-linea bg-white text-sm text-pizarra"
+        {proyectos.map((p) => (
+          <figure
+            key={p.img}
+            className="group relative overflow-hidden rounded-xl border border-linea"
           >
-            Foto de proyecto
-          </div>
+            <Image
+              src={p.img}
+              alt={p.titulo}
+              width={1000}
+              height={1250}
+              className="h-80 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-tinta/85 to-transparent p-4">
+              <span className="font-eyebrow text-[10px] uppercase tracking-[0.14em] text-white/80">
+                {p.sector}
+              </span>
+              <p className="text-sm font-semibold text-white">{p.titulo}</p>
+            </figcaption>
+          </figure>
         ))}
       </div>
 
