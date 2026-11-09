@@ -17,7 +17,7 @@ export default function Footer() {
           />
           <p className="mt-4 max-w-xs text-sm text-pizarra">
             Construcciones prefabricadas. Diseño, fabricación y montaje de espacios
-            modulares de acero.
+            modulares.
           </p>
         </div>
 

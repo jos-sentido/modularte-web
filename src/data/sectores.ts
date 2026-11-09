@@ -13,7 +13,7 @@ export const sectores: Sector[] = [
     slug: "mineria",
     nombre: "Minería",
     problema: "Campamentos y oficinas donde no hay infraestructura, en plazos cortos.",
-    solucion: "Módulos de acero para dormitorios, comedores y oficinas, resistentes y reubicables.",
+    solucion: "Módulos para dormitorios, comedores y oficinas, resistentes y reubicables.",
     sistemas: ["armabox", "unidades-moviles"],
     img: "/fotos/campamento.jpg",
   },

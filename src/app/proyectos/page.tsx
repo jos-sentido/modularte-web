@@ -17,7 +17,7 @@ export default function ProyectosPage() {
         Obra entregada, no promesas
       </h1>
       <p className="mt-4 max-w-xl text-pizarra">
-        Casos reales por sistema y sector. Espacios modulares de acero entregados y
+        Casos reales por sistema y sector. Espacios modulares entregados y
         montados en sitio.
       </p>
 

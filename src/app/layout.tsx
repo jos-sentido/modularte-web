@@ -12,11 +12,11 @@ export const metadata: Metadata = {
     template: "%s · Modularte",
   },
   description:
-    "Diseño, fabricación y montaje de espacios modulares de acero para industria, oficina, educación y más. Entrega en semanas, no en meses.",
+    "Construcción modular de nivel industrial: diseño, fabricación y montaje de espacios modulares para industria, oficina, educación y más. Entrega en semanas, no en meses.",
   openGraph: {
     title: "Modularte · Construcciones prefabricadas",
     description:
-      "Espacios modulares de acero listos para operar. Cotiza tu proyecto por sistema y aplicación.",
+      "Espacios modulares listos para operar. Cotiza tu proyecto por sistema y aplicación.",
     type: "website",
     locale: "es_MX",
   },
@@ -27,7 +27,7 @@ const jsonLd = {
   "@type": "GeneralContractor",
   name: "Modularte",
   description:
-    "Diseño, fabricación y montaje de espacios modulares de acero para industria, oficina, educación y más.",
+    "Construcción modular de nivel industrial: diseño, fabricación y montaje de espacios modulares para industria, oficina, educación y más.",
   url: "https://modularte.com.mx",
   logo: "https://modularte.com.mx/brand/logo/modularte-vertical.png",
   image: "https://modularte.com.mx/fotos/modulos-exterior.jpg",

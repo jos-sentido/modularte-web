@@ -35,7 +35,7 @@ export default function Home() {
             <span className="mt-2 block h-[3px] w-10 bg-rojo" />
           </span>
           <h1 className="mt-6 max-w-5xl font-display text-6xl font-bold uppercase leading-[0.9] tracking-tight text-white sm:text-8xl">
-            Espacios de acero
+            Espacios modulares
             <br />
             listos para operar
           </h1>
@@ -109,7 +109,7 @@ export default function Home() {
           className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
         >
           <span className="select-none font-display text-[30vw] font-bold uppercase leading-none text-white/10">
-            Acero
+            Modular
           </span>
         </span>
         <div className="relative mx-auto max-w-6xl px-4 py-24">

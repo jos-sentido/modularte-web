@@ -28,7 +28,7 @@ export default function NosotrosPage() {
               Treinta años construyendo
             </h1>
             <p className="mt-5 max-w-xl text-lg text-pizarra">
-              En Modularte diseñamos, fabricamos y montamos espacios modulares de acero.
+              En Modularte diseñamos, fabricamos y montamos espacios modulares.
               Entregamos operación lista donde otros apenas empiezan la obra.
             </p>
             <div className="mt-8">
