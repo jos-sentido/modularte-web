@@ -10,6 +10,7 @@ export type Sistema = {
   caracteristicas?: Caracteristica[];
   render?: string; // imagen del sistema tomada del material del cliente
   renderPie?: string;
+  video?: { src: string; poster: string }; // animación ilustrativa del armado, hecha a partir de fotos reales
   tarjeta?: string; // render de estudio para las tarjetas de sistema (mismo estilo en todos)
   diagrama?: { src: string; pie: string };
   cualidadesNota?: string;
@@ -73,6 +74,7 @@ export const sistemas: Sistema[] = [
       "Edificios prefabricados que se arman en sitio: estructura de acero, muros de panel y cubierta a dos aguas, de uno o dos niveles. Para proyectos que requieren un espacio fijo y a la medida.",
     img: "/fotos/tradicional/terminado-2.jpg",
     render: "/fotos/tradicional/terminado-3.jpg",
+    video: { src: "/video/tradicional-armado.mp4", poster: "/video/tradicional-armado.jpg" },
     renderPie: "Fotografía de proyecto",
     tarjeta: "/renders/tradicional.jpg",
     caracteristicas: [

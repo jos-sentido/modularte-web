@@ -25,7 +25,7 @@ export default function PageHero({
   const referencia =
     !!img && !img.startsWith("/fotos/tradicional/") && !img.startsWith("/fotos/sectores/");
   return (
-    <section className="relative isolate -mt-[61px] flex min-h-[46vh] items-end overflow-hidden bg-tinta">
+    <section className="relative isolate -mt-[61px] flex min-h-[46vh] items-center overflow-hidden bg-tinta">
       {img ? (
         <>
           <Image
@@ -55,7 +55,8 @@ export default function PageHero({
         </span>
       )}
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-14 pt-32">
+      {/* centrado en alto; arriba lleva de más la altura del menú (61 px) para que quede al centro de lo visible */}
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-16 pt-32">
         <Eyebrow tone="dark">{eyebrow}</Eyebrow>
         <h1 className="mt-5 max-w-4xl font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl">
           {title}

@@ -139,6 +139,24 @@ export default async function SistemaPage({
                 <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta sm:text-4xl">
                   Se arma en sitio, paso a paso
                 </h2>
+                {s.video && (
+                  <figure className="mt-10">
+                    <video
+                      className="aspect-video w-full bg-tinta object-cover"
+                      src={s.video.src}
+                      poster={s.video.poster}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      aria-label="Animación del armado de un edificio Tradicional, de la estructura a los muros terminados"
+                    />
+                    <figcaption className="mt-3 font-eyebrow text-[10px] uppercase tracking-[0.14em] text-pizarra">
+                      Animación ilustrativa hecha a partir de fotos reales de obra
+                    </figcaption>
+                  </figure>
+                )}
                 <div className="mt-10">
                   <ProcesoArmado pasos={s.cualidades} nota={s.cualidadesNota} />
                 </div>
