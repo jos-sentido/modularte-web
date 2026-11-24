@@ -8,27 +8,35 @@ export type Sistema = {
   aplicaciones: string[];
   img?: string; // foto principal (banco tratado)
   caracteristicas?: Caracteristica[];
-  casos?: string[]; // rutas de fotos de proyectos con ese sistema
+  render?: string; // imagen del sistema tomada del material del cliente
+  renderPie?: string;
+  tarjeta?: string; // render de estudio para las tarjetas de sistema (mismo estilo en todos)
+  diagrama?: { src: string; pie: string };
+  cualidadesNota?: string;
+  usos?: { nombre: string; fotos: { img: string; titulo: string }[] }[]; // usos con fotografía real
+  galeria?: { img: string; titulo: string }[]; // fotografía real de proyectos con el sistema
+  cualidades?: { img: string; titulo: string; texto: string }[];
   pendiente?: boolean; // falta info del cliente (ZAR / Flotante)
 };
 
-// Los 5 sistemas de Modularte. ZAR y Flotante quedan pendientes de info (🚧).
+// Los 5 sistemas de Modularte. ZAR y Flotante quedan pendientes de información del cliente.
 export const sistemas: Sistema[] = [
   {
     slug: "unidades-moviles",
     nombre: "Unidades Móviles",
-    tagline: "Espacios reubicables, listos para moverse contigo.",
+    tagline: "Espacios sobre remolque, listos para moverse contigo.",
     descripcion:
-      "Módulos y remolques que se trasladan de un sitio a otro sin obra. Ideales cuando la operación cambia de lugar: llegan, se conectan y operan.",
-    img: "/fotos/oficinas-obra.jpg",
+      "Unidades montadas sobre chasis de acero con ejes y tirón: se remolcan al sitio, se nivelan y quedan listas para operar. Hay modelos de línea para oficina, sanitarios, dormitorios, aulas, comedores y más.",
+    render: "/renders/unidades-moviles.jpg",
+    renderPie: "Render ilustrativo, basado en la ficha de la oficina de obra 8' × 24'",
+    tarjeta: "/renders/unidades-moviles.jpg",
     caracteristicas: [
-      { k: "Instalación", v: "Sin obra: se traslada y se conecta" },
-      { k: "Movilidad", v: "Reubicable de un sitio a otro" },
-      { k: "Usos", v: "Oficinas, casetas, comedores, sanitarios" },
-      { k: "Entrega", v: "En semanas, no en meses" },
+      { k: "Chasis", v: "Acero, con ejes y tirón" },
+      { k: "Aislamiento", v: "Térmico y acústico R8" },
+      { k: "Medidas", v: "De 2.44 × 6.10 m a 3.66 × 18.28 m" },
+      { k: "Equipamiento", v: "Aire acondicionado, escritorio, contactos, voz y datos" },
     ],
-    aplicaciones: ["Oficinas de obra", "Casetas de vigilancia", "Comedores", "Sanitarios"],
-    casos: ["/fotos/oficinas-obra.jpg", "/fotos/campamento.jpg"],
+    aplicaciones: ["Oficinas de obra", "Oficinas de ventas", "Dormitorios", "Aulas", "Comedores", "Sanitarios y regaderas", "Consultorios médicos", "Bodegas", "Casetas de vigilancia"],
   },
   {
     slug: "armabox",
@@ -36,7 +44,18 @@ export const sistemas: Sistema[] = [
     tagline: "El módulo de acero que se arma donde lo necesitas.",
     descripcion:
       "Módulo de acero estructural que se transporta plegado y se arma en sitio en poco tiempo. Apilable y combinable para crear desde una caseta hasta un campamento completo.",
-    img: "/fotos/modulos-exterior.jpg",
+    cualidadesNota:
+      "Paso 1: render ilustrativo basado en la fotografía del folleto · pasos 2 a 4: ilustraciones del folleto",
+    render: "/renders/armabox-modulo.jpg",
+    tarjeta: "/renders/armabox-modulo.jpg",
+    renderPie: "Render ilustrativo, basado en las fotografías del folleto del sistema",
+    diagrama: { src: "/folleto/composicion.jpg", pie: "Composición del módulo estándar · folleto del sistema" },
+    cualidades: [
+      { img: "/renders/armabox-empaque.jpg", titulo: "Llega empacado plano", texto: "Piso, techo, columnas y paneles se empacan planos y se cargan en contenedores." },
+      { img: "/folleto/paso-1.jpg", titulo: "Suelo y columnas", texto: "Se coloca el bastidor de piso y se montan las columnas." },
+      { img: "/folleto/paso-2.jpg", titulo: "Montar el techo", texto: "El bastidor de techo se iza y se fija sobre las columnas." },
+      { img: "/folleto/paso-3.jpg", titulo: "Insertar los paneles de pared", texto: "Los paneles cierran el módulo. Todos los componentes se conectan con pernos, sin soldar ni pintar en sitio." },
+    ],
     caracteristicas: [
       { k: "Medidas", v: "6055 × 2435 × 2896 mm" },
       { k: "Estructura", v: "Acero SGH340" },
@@ -45,38 +64,80 @@ export const sistemas: Sistema[] = [
       { k: "Confort", v: "Aislamiento térmico y acústico" },
     ],
     aplicaciones: ["Dormitorios", "Baños", "Oficinas", "Aulas", "Clínicas", "Almacenes"],
-    casos: ["/fotos/modulos-exterior.jpg", "/fotos/modulos-arboles.jpg", "/fotos/campamento.jpg"],
   },
   {
     slug: "tradicional",
     nombre: "Tradicional",
-    tagline: "Construcción prefabricada a la medida del proyecto.",
+    tagline: "El sistema que se arma en sitio, a la medida del proyecto.",
     descripcion:
-      "Soluciones prefabricadas para proyectos que requieren un espacio fijo y personalizado, con la velocidad de la prefabricación y acabados a la medida.",
-    img: "/fotos/patio.jpg",
+      "Edificios prefabricados que se arman en sitio: estructura de acero, muros de panel y cubierta a dos aguas, de uno o dos niveles. Para proyectos que requieren un espacio fijo y a la medida.",
+    img: "/fotos/tradicional/terminado-2.jpg",
+    render: "/fotos/tradicional/terminado-1.jpg",
+    renderPie: "Fotografía de proyecto",
+    tarjeta: "/renders/tradicional.jpg",
     caracteristicas: [
-      { k: "Tipo", v: "Prefabricado a la medida" },
-      { k: "Uso", v: "Espacios fijos y personalizados" },
-      { k: "Escala", v: "Desde módulos hasta edificios" },
+      { k: "Estructura", v: "Acero, se arma en sitio" },
+      { k: "Muros", v: "Paneles prefabricados" },
+      { k: "Cubierta", v: "Techo a dos aguas" },
+      { k: "Niveles", v: "Uno o dos, con escalera exterior" },
+    ],
+    cualidades: [
+      { img: "/fotos/tradicional/armado-1.jpg", titulo: "Se levanta la estructura", texto: "Marcos y armaduras de acero se montan sobre la base." },
+      { img: "/fotos/tradicional/armado-2.jpg", titulo: "Se colocan los paneles", texto: "Los paneles de muro se insertan entre los perfiles de la estructura." },
+      { img: "/fotos/tradicional/armado-3.jpg", titulo: "Se cierran los muros", texto: "El edificio se cierra bajo la armadura de la cubierta." },
+      { img: "/fotos/tradicional/armado-4.jpg", titulo: "Muros y ventanas listos", texto: "Fachada terminada, con sus ventanas colocadas." },
+    ],
+    cualidadesNota: "Fotografías de obra",
+    usos: [
+      {
+        nombre: "Aulas",
+        fotos: [
+          { img: "/fotos/tradicional/aulas-1.jpg", titulo: "Aulas de una planta en un plantel" },
+          { img: "/fotos/tradicional/aulas-2.jpg", titulo: "Aula por dentro" },
+          { img: "/fotos/tradicional/aulas-3.jpg", titulo: "Escuela de una planta" },
+          { img: "/fotos/tradicional/aulas-4.jpg", titulo: "Aulas entre áreas verdes" },
+        ],
+      },
+      {
+        nombre: "Oficinas",
+        fotos: [
+          { img: "/fotos/tradicional/oficinas-1.jpg", titulo: "Oficina con ventana y aire acondicionado" },
+          { img: "/fotos/tradicional/oficinas-2.jpg", titulo: "Oficina de trabajo" },
+        ],
+      },
+      {
+        nombre: "Planta libre y pasillos",
+        fotos: [
+          { img: "/fotos/tradicional/interior-1.jpg", titulo: "Planta libre, lista para distribuir" },
+          { img: "/fotos/tradicional/interior-2.jpg", titulo: "Pasillo interior con accesos a cada espacio" },
+        ],
+      },
+    ],
+    galeria: [
+      { img: "/fotos/tradicional/terminado-3.jpg", titulo: "Edificio de dos niveles" },
+      { img: "/fotos/tradicional/terminado-4.jpg", titulo: "Escalera y pasillo exterior" },
+      { img: "/fotos/tradicional/terminado-5.jpg", titulo: "Fachada con pasillo en planta alta" },
+      { img: "/fotos/tradicional/terminado-6.jpg", titulo: "Fachada lateral" },
+      { img: "/fotos/tradicional/terminado-1.jpg", titulo: "Vista general" },
+      { img: "/fotos/tradicional/terminado-2.jpg", titulo: "Vista lateral" },
     ],
     aplicaciones: ["Edificios de oficinas", "Naves", "Espacios a la medida"],
-    casos: ["/fotos/patio.jpg", "/fotos/escuela.jpg"],
   },
   {
     slug: "zar",
     nombre: "ZAR",
-    tagline: "Pendiente de definir con el cliente.",
+    tagline: "Próximamente.",
     descripcion:
-      "Contenido en construcción: falta información del sistema (tecnología, materiales, diferenciador y casos).",
+      "Estamos preparando la información de este sistema.",
     aplicaciones: [],
     pendiente: true,
   },
   {
     slug: "flotante",
     nombre: "Flotante",
-    tagline: "Pendiente de definir con el cliente.",
+    tagline: "Próximamente.",
     descripcion:
-      "Contenido en construcción: falta información del sistema (tecnología, materiales, diferenciador y casos).",
+      "Estamos preparando la información de este sistema.",
     aplicaciones: [],
     pendiente: true,
   },

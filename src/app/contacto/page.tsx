@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
-import CotizaForm from "@/components/CotizaForm";
+import Solicitud from "@/components/site/Solicitud";
+import { CONTACTO } from "@/components/site/mapa";
 
 export const metadata: Metadata = {
   title: "Contacto y cotización",
@@ -32,7 +33,7 @@ export default async function ContactoPage({
       />
 
       <section className="mx-auto max-w-6xl px-4 py-16">
-        <div className="grid gap-12 lg:grid-cols-2">
+        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
           <div>
             <ul className="space-y-5 text-sm text-tinta">
               <li>
@@ -40,8 +41,8 @@ export default async function ContactoPage({
                   Teléfono / WhatsApp
                 </span>
                 <br />
-                <a href="tel:+523326160168" className="text-lg hover:text-rojo">
-                  +52 33 2616 0168
+                <a href={CONTACTO.telefonoHref} className="text-lg hover:text-rojo">
+                  {CONTACTO.telefono}
                 </a>
               </li>
               <li>
@@ -49,8 +50,8 @@ export default async function ContactoPage({
                   Correo
                 </span>
                 <br />
-                <a href="mailto:info@modularte.com.mx" className="text-lg hover:text-rojo">
-                  info@modularte.com.mx
+                <a href={`mailto:${CONTACTO.correo}`} className="text-lg hover:text-rojo">
+                  {CONTACTO.correo}
                 </a>
               </li>
               <li>
@@ -58,7 +59,7 @@ export default async function ContactoPage({
                   Ubicación
                 </span>
                 <br />
-                Mexicaltzingo #1545 int 167, Col. Moderna, Guadalajara, Jal. C.P. 44100
+                {CONTACTO.direccion}
               </li>
             </ul>
 
@@ -66,10 +67,10 @@ export default async function ContactoPage({
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 flex items-center justify-between gap-4 border border-linea bg-white p-5 transition-colors hover:border-rojo"
+              className="mt-8 flex items-center justify-between gap-4 border border-linea bg-white p-5 transition-colors hover:border-tinta"
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-rojo/10 text-rojo">
+                <span className="flex h-11 w-11 flex-none items-center justify-center border border-pizarra/40 text-pizarra">
                   <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                     <path d="M12 21s-7-5.2-7-11a7 7 0 1114 0c0 5.8-7 11-7 11z" />
                     <circle cx="12" cy="10" r="2.5" />
@@ -80,13 +81,11 @@ export default async function ContactoPage({
                   <p className="text-xs text-pizarra">Guadalajara, Jalisco</p>
                 </div>
               </div>
-              <span className="text-sm font-semibold text-rojo">Ver en Google Maps —</span>
+              <span className="text-sm font-semibold text-tinta underline underline-offset-4">Ver en Google Maps</span>
             </a>
           </div>
 
-          <div className="border border-linea bg-white p-6 sm:p-8">
-            <CotizaForm sistemaInicial={sistema} sectorInicial={sector} />
-          </div>
+          <Solicitud sistemaInicial={sistema} sectorInicial={sector} />
         </div>
       </section>
     </>

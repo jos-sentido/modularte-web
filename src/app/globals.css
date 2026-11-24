@@ -55,6 +55,10 @@ h1, h2, h3 {
   html { scroll-behavior: auto; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .corner-path { stroke-dashoffset: 0 !important; transition: none !important; }
+}
+
 /* ---- Fundido de imágenes al cargar ---- */
 .foto-fade { opacity: 0; transition: opacity 0.7s ease; }
 .foto-fade.foto-loaded { opacity: 1; }
@@ -93,3 +97,52 @@ h1, h2, h3 {
 @media (prefers-reduced-motion: reduce) {
   .blueprint { animation: none; }
 }
+
+/* ---- Hero: la foto se arma por módulos (retícula de 6 columnas del manual) ---- */
+.tapa { transform-origin: top; transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1); }
+.tapa-abre { transform: scaleY(0); }
+.tapa-cierra { transform: scaleY(1); transition-duration: 0.35s; }
+@media (prefers-reduced-motion: reduce) { .tapa { transition: none; } }
+
+/* ---- Proceso de armado: la imagen entra por franjas, como paneles que cierran un muro ---- */
+@keyframes franja-in { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+.franja { animation: franja-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) { .franja { animation: none; } }
+
+/* ---- Cambio de imagen en catálogos ---- */
+@keyframes foto-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.foto-entra { animation: foto-entra 0.35s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .foto-entra { animation: none; } }
+
+/* ---- Pie que se descubre: queda fijo al fondo y el contenido se retira encima de él.
+   Solo cuando el pie cabe completo en la pantalla; si no, fluye como siempre. ---- */
+@media (min-width: 1024px) and (min-height: 760px) {
+  .pie-descubre { position: sticky; bottom: 0; z-index: 0; }
+}
+
+/* ---- Controles de Modularte ---- */
+/* corte en diagonal del manual, en la esquina inferior derecha */
+.corte { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+/* la flecha avanza cuando el botón recibe atención */
+.flecha-avanza { transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+.group:hover .flecha-avanza, .group:focus-visible .flecha-avanza { transform: translateX(5px); }
+/* marco de esquinas que se desplaza entre opciones */
+.marco-movil { transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), width 0.38s cubic-bezier(0.22, 1, 0.36, 1); }
+@media (prefers-reduced-motion: reduce) { .flecha-avanza, .marco-movil { transition: none; } }
+
+/* ---- Huecos de la frase de cotización ----
+   Esquinas del manual que «respiran» mientras el hueco está vacío, y el botón de
+   flecha que asoma hacia abajo: invitan a abrir la lista. Al elegir, se quedan quietas. */
+.hueco-esquina { position: absolute; width: 0.26em; height: 0.26em; border-color: #fff; pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.hueco-tl { top: -0.09em; left: -0.09em; border-top: 3px solid; border-left: 3px solid; --dx: -0.1em; --dy: -0.1em; }
+.hueco-tr { top: -0.09em; right: -0.09em; border-top: 3px solid; border-right: 3px solid; --dx: 0.1em; --dy: -0.1em; }
+.hueco-bl { bottom: -0.09em; left: -0.09em; border-bottom: 3px solid; border-left: 3px solid; --dx: -0.1em; --dy: 0.1em; }
+.hueco-br { bottom: -0.09em; right: -0.09em; border-bottom: 3px solid; border-right: 3px solid; --dx: 0.1em; --dy: 0.1em; }
+@keyframes hueco-respira { 0%, 55%, 100% { transform: translate(0, 0); } 25% { transform: translate(var(--dx), var(--dy)); } }
+@keyframes hueco-asoma { 0%, 55%, 100% { transform: translateY(0); } 25% { transform: translateY(0.08em); } }
+.hueco[data-vacio] .hueco-esquina { animation: hueco-respira 2.6s cubic-bezier(0.45, 0, 0.25, 1) var(--retraso, 0s) infinite; }
+.hueco[data-vacio] .hueco-flecha { animation: hueco-asoma 2.6s cubic-bezier(0.45, 0, 0.25, 1) var(--retraso, 0s) infinite; }
+.hueco:hover .hueco-esquina, .hueco:focus-visible .hueco-esquina, .hueco[data-abierto] .hueco-esquina { animation: none; transform: translate(var(--dx), var(--dy)); }
+.hueco:hover .hueco-flecha, .hueco[data-abierto] .hueco-flecha { animation: none; }
+@media (prefers-reduced-motion: reduce) { .hueco .hueco-esquina, .hueco .hueco-flecha { animation: none !important; } }

@@ -8,6 +8,9 @@ import CotizarButton from "@/components/CotizarButton";
 import { sectores, getSector } from "@/data/sectores";
 import { getSistema } from "@/data/sistemas";
 
+// Lee params de la URL: se permite render bloqueante para rutas no pregeneradas.
+export const instant = false;
+
 export function generateStaticParams() {
   return sectores.map((s) => ({ sector: s.slug }));
 }

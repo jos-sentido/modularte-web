@@ -30,7 +30,7 @@ const jsonLd = {
     "Construcción modular de nivel industrial: diseño, fabricación y montaje de espacios modulares para industria, oficina, educación y más.",
   url: "https://modularte.com.mx",
   logo: "https://modularte.com.mx/brand/logo/modularte-vertical.png",
-  image: "https://modularte.com.mx/fotos/modulos-exterior.jpg",
+  image: "https://modularte.com.mx/fotos/tradicional/terminado-1.jpg",
   telephone: "+523326160168",
   email: "info@modularte.com.mx",
   address: {
@@ -58,7 +58,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Navbar />
-        <main>{children}</main>
+        <main className="relative z-10 bg-hueso shadow-[0_30px_60px_-25px_rgb(0_0_0/0.65)]">{children}</main>
         <Footer />
         <WhatsAppFloat />
       </body>

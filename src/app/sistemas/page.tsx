@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import PageHero from "@/components/PageHero";
-import SistemaIcon from "@/components/SistemaIcon";
+import SistemaCelda from "@/components/site/SistemaCelda";
 import { sistemas } from "@/data/sistemas";
 
 export const metadata: Metadata = {
@@ -22,31 +21,11 @@ export default function SistemasPage() {
       />
 
       <section className="mx-auto max-w-6xl px-4 py-20">
-        <div className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
-          {sistemas.map((s) => (
-            <Link
-              key={s.slug}
-              href={`/sistemas/${s.slug}`}
-              className="group flex items-start gap-5 border-b border-linea pb-8"
-            >
-              <span className="flex h-20 w-20 flex-none items-center justify-center rounded-xl border border-linea text-rojo transition-all group-hover:-translate-y-0.5 group-hover:border-rojo group-hover:shadow-md group-hover:shadow-rojo/10">
-                <SistemaIcon slug={s.slug} className="h-11 w-11" />
-              </span>
-              <div className="pt-1">
-                <h2 className="font-display text-xl font-bold uppercase text-pizarra transition-colors group-hover:text-rojo">
-                  {s.nombre}
-                  {s.pendiente && (
-                    <span className="ml-2 align-middle text-[10px] font-normal tracking-wide text-pizarra/70">
-                      · pronto
-                    </span>
-                  )}
-                </h2>
-                <p className="mt-1 text-sm text-pizarra">{s.tagline}</p>
-                <span className="mt-3 inline-block font-eyebrow text-[10px] uppercase tracking-[0.16em] text-rojo">
-                  Ver sistema —
-                </span>
-              </div>
-            </Link>
+        <div className="grid gap-px border border-linea bg-linea sm:grid-cols-6">
+          {sistemas.map((s, n) => (
+            <div key={s.slug} className={n < 3 ? "sm:col-span-2" : "sm:col-span-3"}>
+              <SistemaCelda s={s} grande />
+            </div>
           ))}
         </div>
       </section>

@@ -31,10 +31,6 @@ export default function CornerFrame({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setOn(true);
-      return;
-    }
     const io = new IntersectionObserver(
       (es) => es.forEach((e) => e.isIntersecting && (setOn(true), io.disconnect())),
       { threshold: 0.3 },
@@ -84,6 +80,7 @@ export default function CornerFrame({
             stroke={color}
             strokeWidth={stroke}
             strokeLinecap="square"
+            className="corner-path"
             style={{
               strokeDasharray: len,
               strokeDashoffset: on ? 0 : len,

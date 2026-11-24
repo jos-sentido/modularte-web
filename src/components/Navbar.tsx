@@ -5,15 +5,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import CotizarButton from "./CotizarButton";
+import { MENU } from "./site/mapa";
 
-const links = [
-  { href: "/sistemas", label: "Sistemas" },
-  { href: "/configurador", label: "Configurador" },
-  { href: "/soluciones", label: "Soluciones" },
-  { href: "/proyectos", label: "Proyectos" },
-  { href: "/nosotros", label: "Nosotros" },
-  { href: "/contacto", label: "Contacto" },
-];
+const links = MENU.map((m) => ({ href: m.href, label: m.titulo }));
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -82,7 +76,7 @@ export default function Navbar() {
 
         <button
           type="button"
-          className={`inline-flex h-10 w-10 items-center justify-center rounded-lg border md:hidden ${
+          className={`inline-flex h-11 w-11 items-center justify-center rounded-lg border md:hidden ${
             overHero ? "border-white/40 text-white" : "border-linea text-pizarra"
           }`}
           aria-label="Menú"
@@ -101,7 +95,7 @@ export default function Navbar() {
                 key={l.href}
                 href={l.href}
                 aria-current={isActive(l.href) ? "page" : undefined}
-                className={`rounded-lg px-2 py-2.5 hover:bg-white ${
+                className={`flex min-h-11 items-center rounded-lg px-2 hover:bg-white ${
                   isActive(l.href) ? "font-semibold text-rojo" : "text-pizarra"
                 }`}
                 onClick={() => setOpen(false)}
