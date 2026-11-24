@@ -169,17 +169,17 @@ export default function Solicitud({
       </fieldset>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-3">
-        <label className="block">
+        <label className="flex flex-col">
           <span className={etiqueta}>Nombre *</span>
-          <input name="nombre" required autoComplete="name" className={campo} />
+          <input name="nombre" required autoComplete="name" className={`${campo} mt-auto`} />
         </label>
-        <label className="block">
+        <label className="flex flex-col">
           <span className={etiqueta}>Teléfono o WhatsApp</span>
-          <input name="telefono" type="tel" autoComplete="tel" className={campo} />
+          <input name="telefono" type="tel" autoComplete="tel" className={`${campo} mt-auto`} />
         </label>
-        <label className="block">
+        <label className="flex flex-col">
           <span className={etiqueta}>Correo</span>
-          <input name="email" type="email" autoComplete="email" className={campo} />
+          <input name="email" type="email" autoComplete="email" className={`${campo} mt-auto`} />
         </label>
       </div>
       <label className="mt-5 block">
