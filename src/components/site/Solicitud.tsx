@@ -6,7 +6,8 @@
  * como un espacio que se completa con sus módulos. Envía a /api/cotizar (Firestore).
  */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { borrarConfiguracion, leerConfiguracion, textoConfiguracion, type Configuracion } from "@/lib/configuracion";
 import SistemaIcon from "@/components/SistemaIcon";
 import { sistemas } from "@/data/sistemas";
 import { sectores } from "@/data/sectores";
@@ -24,6 +25,21 @@ export default function Solicitud({
   const [sector, setSector] = useState(sectorInicial);
   const [estado, setEstado] = useState<Estado>("idle");
   const [error, setError] = useState("");
+  const [config, setConfig] = useState<Configuracion | null>(null);
+
+  // trae lo que el visitante configuró en el sitio (configurador, modelo o distribución)
+  useEffect(() => {
+    const c = leerConfiguracion();
+    if (!c) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- lectura única del almacenamiento del navegador
+    setConfig(c);
+    if (c.sistema && !sistemaInicial) setSistema(c.sistema);
+  }, [sistemaInicial]);
+
+  const quitarConfig = () => {
+    borrarConfiguracion();
+    setConfig(null);
+  };
 
   async function enviar(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,10 +50,16 @@ export default function Solicitud({
       const res = await fetch("/api/cotizar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...datos, sistema, sector }),
+        body: JSON.stringify({
+          ...datos,
+          sistema,
+          sector,
+          mensaje: [config && textoConfiguracion(config), datos.mensaje].filter(Boolean).join(" — "),
+        }),
       });
       const json = await res.json();
       if (!res.ok || !json.ok) throw new Error(json.error || "No se pudo enviar la solicitud.");
+      borrarConfiguracion();
       setEstado("ok");
     } catch (err) {
       setEstado("error");
@@ -79,6 +101,27 @@ export default function Solicitud({
       <p className="font-display text-2xl font-bold uppercase leading-tight text-tinta sm:text-4xl" aria-live="polite">
         Quiero cotizar {hueco(nombreSistema, "un sistema")} para {hueco(nombreSector, "mi sector")}.
       </p>
+
+      {config && (
+        <div className="mt-8 border-l-[3px] border-rojo bg-white p-5 sm:p-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-3">
+            <p className={etiqueta}>Tu configuración · {config.origen}</p>
+            <button
+              type="button"
+              onClick={quitarConfig}
+              className="min-h-11 text-sm font-semibold text-pizarra underline decoration-pizarra/40 underline-offset-4 hover:text-tinta"
+            >
+              Quitar
+            </button>
+          </div>
+          <ul className="mt-3 space-y-1.5 text-tinta">
+            {config.detalle.map((d) => (
+              <li key={d}>{d}</li>
+            ))}
+          </ul>
+          <p className="mt-3 text-sm text-pizarra">Se envía junto con tu solicitud.</p>
+        </div>
+      )}
 
       <fieldset className="mt-8">
         <legend className={etiqueta}>Sistema</legend>

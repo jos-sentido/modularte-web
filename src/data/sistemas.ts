@@ -72,7 +72,7 @@ export const sistemas: Sistema[] = [
     descripcion:
       "Edificios prefabricados que se arman en sitio: estructura de acero, muros de panel y cubierta a dos aguas, de uno o dos niveles. Para proyectos que requieren un espacio fijo y a la medida.",
     img: "/fotos/tradicional/terminado-2.jpg",
-    render: "/fotos/tradicional/terminado-1.jpg",
+    render: "/fotos/tradicional/terminado-3.jpg",
     renderPie: "Fotografía de proyecto",
     tarjeta: "/renders/tradicional.jpg",
     caracteristicas: [
@@ -118,7 +118,6 @@ export const sistemas: Sistema[] = [
       { img: "/fotos/tradicional/terminado-4.jpg", titulo: "Escalera y pasillo exterior" },
       { img: "/fotos/tradicional/terminado-5.jpg", titulo: "Fachada con pasillo en planta alta" },
       { img: "/fotos/tradicional/terminado-6.jpg", titulo: "Fachada lateral" },
-      { img: "/fotos/tradicional/terminado-1.jpg", titulo: "Vista general" },
       { img: "/fotos/tradicional/terminado-2.jpg", titulo: "Vista lateral" },
     ],
     aplicaciones: ["Edificios de oficinas", "Naves", "Espacios a la medida"],

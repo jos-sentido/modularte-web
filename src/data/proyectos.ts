@@ -9,7 +9,6 @@ export type Proyecto = {
 // Fotografía original de proyectos, entregada por el cliente (carpeta Fotos de Drive).
 // Los pies describen lo que se ve; sin datos de obra no confirmados.
 export const proyectos: Proyecto[] = [
-  { img: "/fotos/tradicional/terminado-1.jpg", titulo: "Edificio de dos niveles", categoria: "Edificios" },
   { img: "/fotos/tradicional/armado-2.jpg", titulo: "Colocación de paneles", categoria: "Armado en sitio" },
   { img: "/fotos/tradicional/aulas-1.jpg", titulo: "Aulas de una planta en un plantel", categoria: "Aulas" },
   { img: "/fotos/tradicional/terminado-4.jpg", titulo: "Escalera y pasillo exterior", categoria: "Edificios" },

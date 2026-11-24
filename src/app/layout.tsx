@@ -30,7 +30,7 @@ const jsonLd = {
     "Construcción modular de nivel industrial: diseño, fabricación y montaje de espacios modulares para industria, oficina, educación y más.",
   url: "https://modularte.com.mx",
   logo: "https://modularte.com.mx/brand/logo/modularte-vertical.png",
-  image: "https://modularte.com.mx/fotos/tradicional/terminado-1.jpg",
+  image: "https://modularte.com.mx/fotos/tradicional/terminado-3.jpg",
   telephone: "+523326160168",
   email: "info@modularte.com.mx",
   address: {

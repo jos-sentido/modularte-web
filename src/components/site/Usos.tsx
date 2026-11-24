@@ -16,8 +16,8 @@ export default function Usos({ usos }: { usos: Uso[] }) {
   const foto = uso.fotos[f];
 
   return (
-    <div className="grid gap-px border border-linea bg-linea lg:grid-cols-[15rem_1fr]">
-      <div className="flex gap-px bg-linea lg:flex-col" role="tablist" aria-label="Usos">
+    <div className="grid grid-cols-1 gap-px border border-linea bg-linea lg:grid-cols-[15rem_1fr] [&>*]:min-w-0">
+      <div className="flex flex-col gap-px bg-linea sm:flex-row lg:flex-col" role="tablist" aria-label="Usos">
         {usos.map((x, n) => (
           <button
             key={x.nombre}

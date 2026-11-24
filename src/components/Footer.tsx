@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SistemaIcon from "./SistemaIcon";
 import InvitacionPie from "./site/InvitacionPie";
+import PieRevela from "./site/PieRevela";
 import { MENU, PIE_SISTEMAS, PIE_SECTORES, CONTACTO } from "./site/mapa";
 
 /*
@@ -14,6 +15,7 @@ export default function Footer() {
   const enlace = "inline-flex min-h-9 items-center text-[15px] text-white/85 transition-colors hover:text-white";
   return (
     <footer className="pie-descubre relative overflow-hidden bg-tinta text-white">
+      <PieRevela>
       <InvitacionPie>
       {/* invitación */}
       <div className="border-b border-white/15">
@@ -114,6 +116,7 @@ export default function Footer() {
           <span>Guadalajara, Jalisco · Cobertura nacional</span>
         </div>
       </div>
+      </PieRevela>
     </footer>
   );
 }

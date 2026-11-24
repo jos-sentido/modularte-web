@@ -16,7 +16,7 @@ import Eyebrow from "@/components/Eyebrow";
 import FoldText from "@/components/bits/FoldText";
 
 const OBRAS = [
-  { src: "/fotos/tradicional/terminado-1.jpg", pie: "Edificio de dos niveles" },
+  { src: "/fotos/tradicional/terminado-3.jpg", pie: "Edificio de dos niveles" },
   { src: "/fotos/tradicional/terminado-5.jpg", pie: "Fachada con pasillo en planta alta" },
   { src: "/fotos/tradicional/terminado-4.jpg", pie: "Escalera y pasillo exterior" },
 ];
@@ -40,7 +40,7 @@ export default function HeroModular() {
   };
 
   return (
-    <section className="relative isolate -mt-[61px] flex min-h-[92svh] items-end overflow-hidden bg-tinta">
+    <section className="relative isolate -mt-[61px] flex min-h-[92svh] items-center overflow-hidden bg-tinta">
       <Image
         key={OBRAS[i].src}
         src={OBRAS[i].src}
@@ -65,7 +65,9 @@ export default function HeroModular() {
       </div>
 
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-tinta/70 to-transparent" />
-      <CornerFrame variant="all" size={56} stroke={3} inset={24} />
+      <div aria-hidden className="pointer-events-none absolute inset-0 hidden sm:block">
+        <CornerFrame variant="all" size={56} stroke={3} inset={24} />
+      </div>
 
       <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-24 pt-32 sm:pb-20">
         <Eyebrow tone="dark">Construcciones prefabricadas</Eyebrow>

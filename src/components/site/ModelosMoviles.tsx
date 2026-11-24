@@ -6,7 +6,9 @@
  */
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { guardarConfiguracion } from "@/lib/configuracion";
 import dynamic from "next/dynamic";
 import {
   modelosMoviles,
@@ -31,6 +33,14 @@ export default function ModelosMoviles() {
   const [vista, setVista] = useState<Vista>("exterior");
   const m = modelosMoviles.find((x) => x.id === id)!;
   const sanitario = m.grupo === "Sanitarios";
+
+  useEffect(() => {
+    guardarConfiguracion({
+      origen: "Unidades Móviles",
+      sistema: "unidades-moviles",
+      detalle: [`Modelo: ${m.grupo} ${m.nombre}`, `Medida: ${m.metros} (${m.pies})`, `Remolque: ${m.eje}`, `Distribución: ${m.distribucion}`],
+    });
+  }, [m]);
   const conBano = !sanitario && !m.id.endsWith("abierta");
   const equipo = sanitario ? equipamientoSanitarios : [...equipamientoOficina, ...(m.extras ?? [])];
   const grupos = ["Oficinas de obra", "Sanitarios"] as const;
@@ -79,14 +89,14 @@ export default function ModelosMoviles() {
               />
             </div>
           )}
-          <div className="absolute left-3 top-3 flex gap-px bg-linea shadow-sm sm:left-4 sm:top-4" role="group" aria-label="Vista">
+          <div className="absolute left-3 right-3 top-3 grid grid-cols-4 gap-px bg-linea shadow-sm sm:left-4 sm:right-auto sm:top-4 sm:flex" role="group" aria-label="Vista">
             {VISTAS.map(([v, rotulo]) => (
               <button
                 key={v}
                 type="button"
                 aria-pressed={vista === v}
                 onClick={() => setVista(v)}
-                className={`min-h-11 px-3 font-eyebrow text-[11px] uppercase tracking-[0.16em] transition-colors sm:px-4 ${
+                className={`min-h-11 px-1 font-eyebrow text-[10px] uppercase leading-tight tracking-[0.08em] transition-colors sm:px-4 sm:text-[11px] sm:tracking-[0.16em] ${
                   vista === v ? "bg-tinta text-white" : "bg-white text-pizarra hover:text-tinta"
                 }`}
               >
@@ -131,6 +141,16 @@ export default function ModelosMoviles() {
               <span className="font-semibold text-tinta">En baño:</span> {equipamientoBano.join(" · ")}
             </p>
           )}
+        </div>
+        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-linea bg-hueso p-5 sm:p-6">
+          <p className="text-sm text-pizarra">Este modelo se carga en tu solicitud de cotización.</p>
+          <Link
+            href="/contacto?sistema=unidades-moviles&config=1"
+            className="corte group inline-flex min-h-12 items-center gap-3 bg-rojo px-6 pr-7 text-sm font-semibold text-white transition-colors hover:bg-rojo-600"
+          >
+            Cotizar este modelo
+            <span aria-hidden className="flecha-avanza inline-block">→</span>
+          </Link>
         </div>
       </div>
     </div>

@@ -49,15 +49,17 @@ export default function SectoresPila() {
           </div>
           <div className="relative min-h-52">
             <Image
-              src={s.img}
+              src={s.tarjeta}
               alt=""
               fill
               sizes="(max-width: 768px) 100vw, 45vw"
               className="object-cover"
             />
-            <span className="absolute bottom-3 right-3 bg-tinta/70 px-2 py-1 font-eyebrow text-[9px] uppercase tracking-[0.16em] text-white/80">
-              Imagen de referencia
-            </span>
+            {!s.tarjeta.startsWith("/fotos/") && (
+              <span className="absolute bottom-3 right-3 bg-tinta/70 px-2 py-1 font-eyebrow text-[9px] uppercase tracking-[0.16em] text-white/80">
+                Render ilustrativo
+              </span>
+            )}
           </div>
           <span
             aria-hidden

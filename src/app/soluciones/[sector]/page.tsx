@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import PageHero from "@/components/PageHero";
 import Eyebrow from "@/components/Eyebrow";
-import SistemaIcon from "@/components/SistemaIcon";
 import CotizarButton from "@/components/CotizarButton";
+import Galeria from "@/components/site/Galeria";
 import { sectores, getSector } from "@/data/sectores";
 import { getSistema } from "@/data/sistemas";
 
@@ -23,7 +24,7 @@ export async function generateMetadata({
   const { sector } = await params;
   const s = getSector(sector);
   if (!s) return {};
-  return { title: `Soluciones para ${s.nombre}`, description: s.solucion };
+  return { title: `Construcción modular para ${s.nombre}`, description: `${s.mensaje} ${s.solucion}` };
 }
 
 export default async function SectorPage({
@@ -38,82 +39,177 @@ export default async function SectorPage({
   const recomendados = s.sistemas
     .map((slug) => getSistema(slug))
     .filter((x): x is NonNullable<typeof x> => Boolean(x) && !x!.pendiente);
+  const cotizar = `/contacto?sector=${s.slug}`;
+  const otros = sectores.filter((x) => x.slug !== s.slug);
 
   return (
     <article>
       <PageHero
-        eyebrow="Soluciones por sector"
+        eyebrow={`Soluciones para ${s.nombre}`}
         title={s.nombre}
-        subtitle={s.solucion}
-        img={s.img}
-        imgAlt={`Soluciones modulares para ${s.nombre}`}
+        subtitle={s.mensaje}
+        img={s.img || undefined}
+        imgAlt={s.imgAlt}
       >
-        <CotizarButton href={`/contacto?sector=${s.slug}`}>
-          Cotizar para {s.nombre}
-        </CotizarButton>
+        <CotizarButton href={cotizar}>{s.accion}</CotizarButton>
       </PageHero>
 
       {/* RETO → SOLUCIÓN */}
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <div className="grid gap-px overflow-hidden border border-linea bg-linea sm:grid-cols-2">
-          <div className="bg-white p-8">
-            <h2 className="font-eyebrow text-xs uppercase tracking-[0.14em] text-pizarra">
-              El reto
-            </h2>
-            <p className="mt-3 text-lg text-pizarra">{s.problema}</p>
+      <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+          <div>
+            <Eyebrow>El reto</Eyebrow>
+            <p className="mt-4 text-lg text-pizarra">{s.problema}</p>
           </div>
-          <div className="bg-white p-8">
-            <h2 className="font-eyebrow text-xs uppercase tracking-[0.14em] text-rojo">
-              Cómo lo resolvemos
-            </h2>
-            <p className="mt-3 text-lg text-tinta">{s.solucion}</p>
+          <p className="border-l-[3px] border-rojo pl-6 font-display text-2xl font-bold uppercase leading-tight text-tinta sm:text-4xl">
+            {s.solucion}
+          </p>
+        </div>
+      </section>
+
+      {/* ESPACIOS QUE RESOLVEMOS */}
+      <section className="border-y border-linea bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
+          <Eyebrow>Qué construimos</Eyebrow>
+          <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta sm:text-4xl">
+            Espacios para {s.nombre}
+          </h2>
+          <div className="mt-10 grid gap-px border border-linea bg-linea sm:grid-cols-2 lg:grid-cols-3">
+            {s.espacios.map((e) => {
+              const sis = getSistema(e.sistema);
+              return (
+                <div key={e.nombre} className="flex flex-col bg-white">
+                  {e.img ? (
+                    <div className="relative aspect-[4/3] overflow-hidden bg-hueso">
+                      <Image
+                        src={e.img}
+                        alt={e.nombre}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className={e.img.startsWith("/fotos/") ? "object-cover" : "object-contain p-4"}
+                      />
+                      {!e.img.startsWith("/fotos/") && (
+                        <span className="absolute bottom-2 right-2 bg-white/85 px-2 py-0.5 font-eyebrow text-[9px] uppercase tracking-[0.14em] text-pizarra">
+                          {e.img.startsWith("/renders/") ? "Render ilustrativo" : "Imagen de ficha"}
+                        </span>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex aspect-[4/3] flex-col justify-end bg-tinta p-6 text-white">
+                      <p className="font-eyebrow text-[10px] uppercase tracking-[0.18em] text-white/55">Medidas disponibles</p>
+                      <ul className="mt-3 flex flex-wrap gap-2">
+                        {e.medidas?.map((m) => (
+                          <li key={m} className="border border-white/30 px-2.5 py-1 font-display text-sm font-bold uppercase">
+                            {m}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-display text-xl font-bold uppercase text-tinta">{e.nombre}</h3>
+                    <p className="mt-2 text-pizarra">{e.texto}</p>
+                    {e.img && e.medidas && (
+                      <p className="mt-3 font-eyebrow text-[10px] uppercase tracking-[0.14em] text-pizarra">
+                        {e.medidas.join(" · ")}
+                      </p>
+                    )}
+                    {sis && (
+                      <Link
+                        href={`/sistemas/${sis.slug}`}
+                        className="group mt-auto inline-flex min-h-11 items-center gap-2 pt-4 text-sm font-semibold text-rojo"
+                      >
+                        {sis.nombre}
+                        <span aria-hidden className="flecha-avanza inline-block">→</span>
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
+      {/* GALERÍA DE OBRA */}
+      {s.galeria.length > 0 && (
+        <section className="bg-tinta">
+          <div className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
+            <Eyebrow tone="dark">Obra real</Eyebrow>
+            <h2 className="mb-10 mt-4 font-display text-3xl font-bold uppercase text-white sm:text-4xl">
+              Proyectos de {s.nombre}
+            </h2>
+            <Galeria fotos={s.galeria} tono="oscuro" />
+          </div>
+        </section>
+      )}
+
       {/* SISTEMAS RECOMENDADOS */}
       {recomendados.length > 0 && (
-        <section className="border-y border-linea bg-white">
-          <div className="mx-auto max-w-6xl px-4 py-16">
-            <Eyebrow>Sistemas recomendados</Eyebrow>
-            <h2 className="mt-4 font-display text-2xl font-bold uppercase text-tinta sm:text-3xl">
-              Lo que usamos en {s.nombre}
-            </h2>
-            <div className="mt-8 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-              {recomendados.map((x) => (
-                <Link key={x.slug} href={`/sistemas/${x.slug}`} className="group flex items-start gap-4">
-                  <span className="flex h-16 w-16 flex-none items-center justify-center rounded-xl border border-linea text-rojo transition-all group-hover:-translate-y-0.5 group-hover:border-rojo">
-                    <SistemaIcon slug={x.slug} className="h-9 w-9" />
-                  </span>
-                  <div className="pt-1">
-                    <h3 className="font-display text-lg font-bold uppercase text-pizarra transition-colors group-hover:text-rojo">
+        <section className="mx-auto max-w-6xl px-4 py-16 sm:py-20">
+          <Eyebrow>Con qué lo resolvemos</Eyebrow>
+          <h2 className="mt-4 font-display text-3xl font-bold uppercase text-tinta sm:text-4xl">Sistemas recomendados</h2>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {recomendados.map((x) => {
+              const img = x.tarjeta ?? x.render;
+              return (
+                <Link key={x.slug} href={`/sistemas/${x.slug}`} className="group block border border-linea bg-white">
+                  {img && (
+                    <div className="relative aspect-[3/2] overflow-hidden bg-hueso">
+                      <Image
+                        src={img}
+                        alt={x.nombre}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <h3 className="font-display text-xl font-bold uppercase text-tinta transition-colors group-hover:text-rojo">
                       {x.nombre}
                     </h3>
                     <p className="mt-1 text-sm text-pizarra">{x.tagline}</p>
                   </div>
                 </Link>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </section>
       )}
 
       {/* CIERRE */}
-      <section className="mx-auto max-w-6xl px-4 py-16">
-        <div className="flex flex-wrap items-center justify-between gap-6 border border-linea bg-white p-8">
+      <section className="bg-rojo">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-8 px-4 py-16 sm:py-20">
           <div>
-            <h2 className="font-display text-2xl font-bold uppercase text-tinta sm:text-3xl">
-              Tu proyecto en {s.nombre}
+            <h2 className="font-display text-3xl font-bold uppercase leading-tight text-white sm:text-5xl">
+              Tu proyecto de {s.nombre}
             </h2>
-            <p className="mt-2 text-pizarra">
-              Cuéntanos el alcance y te armamos la propuesta.
-            </p>
+            <p className="mt-3 text-white/85">Cuéntanos el alcance y te armamos la propuesta.</p>
           </div>
-          <CotizarButton href={`/contacto?sector=${s.slug}`}>
-            Cotizar para {s.nombre}
+          <CotizarButton href={cotizar} className="!bg-white !text-tinta hover:!bg-tinta hover:!text-white">
+            {s.accion}
           </CotizarButton>
         </div>
       </section>
+
+      {/* OTROS SECTORES */}
+      <nav aria-label="Otros sectores" className="mx-auto max-w-6xl px-4 py-12">
+        <p className="font-eyebrow text-[11px] uppercase tracking-[0.16em] text-pizarra">Otros sectores</p>
+        <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-3">
+          {otros.map((o) => (
+            <li key={o.slug}>
+              <Link
+                href={`/soluciones/${o.slug}`}
+                className="group inline-flex min-h-11 items-center gap-2 font-display text-xl font-bold uppercase text-pizarra hover:text-rojo"
+              >
+                {o.nombre}
+                <span aria-hidden className="flecha-avanza inline-block text-base">→</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </article>
   );
 }

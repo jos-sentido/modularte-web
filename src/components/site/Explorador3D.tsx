@@ -8,6 +8,8 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { guardarConfiguracion } from "@/lib/configuracion";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
@@ -225,6 +227,15 @@ export default function Explorador3D({
   const [vista, setVista] = useState<Vista>("exterior");
   const [listo, setListo] = useState(false);
   const dist = lista.find((x) => x.id === id) ?? lista[0];
+
+  useEffect(() => {
+    if (fijo || conjunto !== "armabox") return;
+    guardarConfiguracion({
+      origen: "Armabox®",
+      sistema: "armabox",
+      detalle: [`Distribución: ${dist.nombre}`, dist.resumen, "Módulo de 6055 × 2435 × 2896 mm"],
+    });
+  }, [dist, fijo, conjunto]);
 
   useEffect(() => {
     const el = lienzo.current;
@@ -446,6 +457,15 @@ export default function Explorador3D({
           <div>
             <p className="font-display text-xl font-bold uppercase leading-tight text-tinta">{dist.nombre}</p>
             <p className="mt-1 text-sm text-pizarra">{dist.resumen}</p>
+            {!fijo && conjunto === "armabox" && (
+              <Link
+                href="/contacto?sistema=armabox&config=1"
+                className="group mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-rojo"
+              >
+                Cotizar esta distribución
+                <span aria-hidden className="flecha-avanza inline-block">→</span>
+              </Link>
+            )}
           </div>
           <p className="font-eyebrow text-[10px] uppercase tracking-[0.14em] text-pizarra">
             {vista === "plano"

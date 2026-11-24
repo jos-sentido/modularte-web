@@ -10,16 +10,26 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { proyectos, type Categoria } from "@/data/proyectos";
+import { proyectos } from "@/data/proyectos";
 import Selector from "./Selector";
 
-const CATEGORIAS: ("Todas" | Categoria)[] = ["Todas", "Edificios", "Armado en sitio", "Aulas", "Interiores"];
+type Foto = { img: string; titulo: string; categoria: string };
 
-export default function Galeria({ modo = "completa" }: { modo?: "tira" | "completa" }) {
-  const [filtro, setFiltro] = useState<(typeof CATEGORIAS)[number]>("Todas");
+export default function Galeria({
+  modo = "completa",
+  fotos,
+  tono = "claro",
+}: {
+  modo?: "tira" | "completa";
+  fotos?: Foto[];
+  tono?: "claro" | "oscuro";
+}) {
+  const base: Foto[] = fotos ?? proyectos;
+  const CATEGORIAS = ["Todas", ...Array.from(new Set(base.map((p) => p.categoria)))];
+  const [filtro, setFiltro] = useState("Todas");
   const [abierta, setAbierta] = useState<number | null>(null);
   const tira = useRef<HTMLDivElement>(null);
-  const lista = modo === "tira" ? proyectos.slice(0, 9) : proyectos.filter((p) => filtro === "Todas" || p.categoria === filtro);
+  const lista = modo === "tira" ? base.slice(0, 9) : base.filter((p) => filtro === "Todas" || p.categoria === filtro);
 
   const mover = useCallback(
     (d: number) => setAbierta((n) => (n === null ? n : (n + d + lista.length) % lista.length)),
@@ -128,16 +138,19 @@ export default function Galeria({ modo = "completa" }: { modo?: "tira" | "comple
 
   return (
     <div>
+      {CATEGORIAS.length > 2 && (
       <Selector
         etiqueta="Filtrar por tipo"
+        tono={tono}
         valor={filtro}
-        onCambio={(id) => (setFiltro(id as (typeof CATEGORIAS)[number]), setAbierta(null))}
+        onCambio={(id) => (setFiltro(id), setAbierta(null))}
         opciones={CATEGORIAS.map((c) => ({
           id: c,
           rotulo: c,
-          cuenta: c === "Todas" ? proyectos.length : proyectos.filter((p) => p.categoria === c).length,
+          cuenta: c === "Todas" ? base.length : base.filter((p) => p.categoria === c).length,
         }))}
       />
+      )}
       <div key={filtro} className="foto-entra mt-8 grid auto-rows-[13rem] grid-flow-dense gap-3 sm:grid-cols-2 sm:auto-rows-[15rem] lg:grid-cols-3">
         {lista.map((_, i) => tarjeta(i, i % 5 === 0 ? "sm:col-span-2 sm:row-span-2" : "", i % 5 === 0 ? "(max-width: 640px) 100vw, 66vw" : "(max-width: 640px) 100vw, 33vw"))}
       </div>

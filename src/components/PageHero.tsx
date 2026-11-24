@@ -23,7 +23,7 @@ export default function PageHero({
   children?: React.ReactNode;
 }) {
   const referencia =
-    !!img && !img.startsWith("/fotos/tradicional/");
+    !!img && !img.startsWith("/fotos/tradicional/") && !img.startsWith("/fotos/sectores/");
   return (
     <section className="relative isolate -mt-[61px] flex min-h-[46vh] items-end overflow-hidden bg-tinta">
       {img ? (

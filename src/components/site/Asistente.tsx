@@ -11,7 +11,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { borrarConfiguracion, guardarConfiguracion } from "@/lib/configuracion";
 import SistemaIcon from "@/components/SistemaIcon";
 import Cubes from "@/components/bits/Cubes";
 
@@ -118,6 +119,14 @@ export default function Asistente() {
     sis && `Sistema sugerido: ${sis.nombre}`,
   ].filter(Boolean) as string[];
 
+  const resumenTexto = resumen.join("|") + ref;
+  useEffect(() => {
+    if (!uso) return;
+    guardarConfiguracion({ origen: "Configurador", sistema: sis?.slug, detalle: [...resumen, ...(ref ? [ref] : [])] });
+    // resumenTexto resume las respuestas; evita guardar en cada render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumenTexto]);
+
   async function enviar(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setEstado("enviando");
@@ -135,6 +144,7 @@ export default function Asistente() {
       });
       const json = await res.json();
       if (!res.ok || !json.ok) throw new Error(json.error || "No se pudo enviar la solicitud.");
+      borrarConfiguracion();
       setEstado("ok");
     } catch (err) {
       setEstado("error");

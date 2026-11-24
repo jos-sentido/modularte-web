@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 import CotizarButton from "./CotizarButton";
 import { MENU } from "./site/mapa";
 
-const links = MENU.map((m) => ({ href: m.href, label: m.titulo }));
+// "Contacto" no va en el menú: el botón Cotizar ya lleva ahí (sí queda en el pie).
+const links = MENU.filter((m) => m.href !== "/contacto").map((m) => ({ href: m.href, label: m.titulo }));
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
