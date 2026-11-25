@@ -250,17 +250,17 @@ export default function Asistente() {
                 <h2 className="font-display text-3xl font-bold uppercase leading-tight text-tinta sm:text-4xl">¿A quién le mandamos la cotización?</h2>
                 <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
                 <div className="mt-6 grid gap-5 sm:grid-cols-3">
-                  <label className="block">
+                  <label className="flex flex-col">
                     <span className={etiqueta}>Nombre *</span>
-                    <input name="nombre" required autoComplete="name" className={campo} />
+                    <input name="nombre" required autoComplete="name" className={`${campo} mt-auto`} />
                   </label>
-                  <label className="block">
+                  <label className="flex flex-col">
                     <span className={etiqueta}>Teléfono o WhatsApp</span>
-                    <input name="telefono" type="tel" autoComplete="tel" className={campo} />
+                    <input name="telefono" type="tel" autoComplete="tel" className={`${campo} mt-auto`} />
                   </label>
-                  <label className="block">
+                  <label className="flex flex-col">
                     <span className={etiqueta}>Correo</span>
-                    <input name="email" type="email" autoComplete="email" className={campo} />
+                    <input name="email" type="email" autoComplete="email" className={`${campo} mt-auto`} />
                   </label>
                 </div>
                 <label className="mt-5 block">
@@ -308,9 +308,17 @@ export default function Asistente() {
               {ref && (
                 <p className="mt-5 border-l-[3px] border-rojo bg-hueso p-4 font-semibold text-tinta">{ref}</p>
               )}
+              {paso < 5 && (
+                <Link
+                  href={`/contacto?sistema=${sis.slug}&config=1`}
+                  className="mt-6 inline-flex min-h-12 w-full items-center justify-center bg-rojo px-6 text-sm font-semibold text-white transition-colors hover:bg-rojo-600"
+                >
+                  Cotizar esta configuración
+                </Link>
+              )}
               <Link
                 href={`/sistemas/${sis.slug}`}
-                className="mt-5 inline-flex min-h-11 items-center text-sm font-semibold text-tinta underline decoration-pizarra/50 underline-offset-4 hover:decoration-tinta"
+                className="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-tinta underline decoration-pizarra/50 underline-offset-4 hover:decoration-tinta"
               >
                 Ver el sistema completo
               </Link>
